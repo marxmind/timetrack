@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html" 
+  xmlns:a="http://xmlns.jcp.org/jsf/passthrough" 
+  >
+<h:head>
+	<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>Login</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+            <h:outputStylesheet name="css/login.css" />
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.js" target="head"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.css" />
+    </f:facet>
+    <title>Time Sheet - IPay</title>
+</h:head>	
+<h:body onload="startTime()">
+	
+<div class="modal show" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    	  <div class="modal-dialog">
+				<div class="modal-content">
+					
+					<h1>TIME SHEET</h1><h1><div id="txt"/></h1><br/>
+				  <h:form id="employeeForm" prependId="false">
+				  &nbsp;&nbsp;<h:commandLink  id="back" class="btn btn-primary" value="BACK" action="#{loginBean.logout}"/><br/>
+					<br/>
+					<h:panelGrid columns="2" cellpadding="10" cellspacing="10">
+                    	  	<h:outputLabel value="  Search: "/><h:inputText id="txtSearch" value="#{timelogBean.searchParam}" style="width: 30em" class="form-control" a:placeholder="Search by Employee Name..." tabindex="1">
+                    	  		<f:ajax event="keyup"  listener="#{timelogBean.init}" render="empData" />
+                    	  	</h:inputText>
+					</h:panelGrid>
+					<br/>
+					
+						  <h:dataTable id="empData" value="#{timelogBean.employees}" var="rpt" border="1" class="table table-striped table-bordered">
+					
+							<h:column>
+            					<f:facet name="header">
+            						<h:outputText value="Employee Name"/>
+            					</f:facet>
+            							<h:outputLabel  value="#{rpt.firstName} #{rpt.middleName} #{rpt.lastName}" style="color: black; text-align: center"/>	
+            					<f:facet name="footer">
+            					</f:facet>
+            				</h:column>
+            				<h:column>
+            					<f:facet name="header">
+            						<h:outputText value="Time In"/>
+            					</f:facet>
+            					<a href="#" data-toggle="tooltip" data-placement="top" title="Click for log in." >
+            						<h:commandButton onclick="if( ! confirm('Are you sure you want to continue for log in?')) return false" 
+            					class="btn btn-primary" value="#{rpt.employeeTime.timeIn}"
+            					action="#{timelogBean.loginButton(true)}" 
+            					 >
+            						<f:setPropertyActionListener value="#{rpt}" target="#{timelogBean.employee}"/>
+						  		</h:commandButton>
+						  		</a>
+            					<f:facet name="footer">
+            					</f:facet>
+            				</h:column>
+            				<h:column>
+            					<f:facet name="header">
+            						<h:outputText value="Time Out"/>
+            					</f:facet>
+            					<a href="#" data-toggle="tooltip" data-placement="top" title="Click for log out." >
+            						<h:commandButton onclick="if( ! confirm('Are you sure you want to continue for log out?')) return false" 
+            					class="btn btn-primary" value="#{rpt.employeeTime.timeOut}"
+            					action="#{timelogBean.logoutButton(true)}" 
+            					 >
+            						<f:setPropertyActionListener value="#{rpt}" target="#{timelogBean.employee}"/>
+            						<!-- <f:ajax execute="@this" render="empData"/> -->
+						  		</h:commandButton>
+            					</a>		
+            					<f:facet name="footer">
+            					</f:facet>
+            				</h:column>
+            				</h:dataTable>
+					
+					
+				  </h:form>
+				</div>
+			</div>
+		  </div>
+<h:outputScript target="head">
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function() {
+    $('#empData').DataTable();
+} );
+
+
+$( document ).click(function() {
+  $( "#empData" ).toggle( "explode" );
+});
+
+//<![CDATA[ 
+
+function startTime(){
+	var today = new Date();
+    var h = today.getHours();
+    var tmph = h;
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    h = checkTime(h);
+    h = checkhr(h);
+    m = checkTime(m);
+    s = checkTime(s);
+	var t;
+	
+	if(tmph<12){
+		t = h + ":" + m + ":" + s + " AM";
+	}else{
+		t = h + ":" + m + ":" + s + " PM";
+	}
+	document.getElementById('txt').innerHTML = "TIME: " + t;
+	var ts = setTimeout(startTime, 500);
+	//alert(t);
+	
+}
+
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+function checkhr(h){
+	if(h==13){h="01";}
+	if(h==14){h="02";}
+	if(h==15){h="03";}
+	if(h==16){h="04";}
+	if(h==17){h="05";}
+	return h;
+}
+
+//]]>
+
+</h:outputScript>   
+</h:body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html" 
+  xmlns:p="http://primefaces.org/ui"   
+  >
+<h:head>
+	<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>Login</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+            <h:outputStylesheet name="css/login.css" />
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>Login - Timetrack</title>
+</h:head>	
+<h:body>
+<p:growl id="msg" showDetail="true" />	
+
+<div class="modal show" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    	  <div class="modal-dialog">
+				<div class="loginmodal-container">
+					<h1>Time Track System</h1><br/>
+				  <h:form prependId="false">
+					  <p:inputText value="#{loginBean.name}" placeholder="User Name" />
+					  <p:password value="#{loginBean.password}" placeholder="Password" />	
+					  <p:commandButton value="Login" styleClass="btn btn-primary" actionListener="#{loginBean.validateUserNamePassword}" />	
+					  <p:commandButton value="Timesheet" styleClass="btn btn-primary" actionListener="#{loginBean.back}" />
+				  </h:form>
+					
+				  <div class="login-help">
+					<!-- <a href="#">Register</a> - <a href="#">Forgot Password</a> -->
+					Technical help: markritalia@gmail.com/09175121252
+				  </div>
+				</div>
+			</div>
+		  </div>
+     
+</h:body>
+</html>
