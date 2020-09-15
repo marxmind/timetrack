@@ -11,7 +11,9 @@ public enum ConfigProp {
 	APP_CONFIG_FILE("app.max"),
 	APP_REPORTS_CONFIG_FILE("reports.max"),
 	APP_DEFAULT_CONFIG_FILE("default-config.max"),
-	SECURITY_ENCRYPTION_FORMAT("utf-8");	
+	SECURITY_ENCRYPTION_FORMAT("utf-8"),
+	APP_LICENSE("license.max"),
+	APP_LICENSE_CODE("data.max");	
 	
 	
 	private String name;

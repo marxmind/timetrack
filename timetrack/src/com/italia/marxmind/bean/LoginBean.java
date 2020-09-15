@@ -1,19 +1,19 @@
 package com.italia.marxmind.bean;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import com.italia.marxmind.application.Application;
 import com.italia.marxmind.conf.Conf;
 import com.italia.marxmind.controller.Login;
+import com.italia.marxmind.enm.Module;
+import com.italia.marxmind.security.License;
+import com.italia.marxmind.sessions.SessionBean;
+import com.italia.marxmind.utils.Whitelist;
 
 @Named
 @ViewScoped
@@ -23,44 +23,48 @@ public class LoginBean implements Serializable{
 	
 	private String name;
 	private String password;
-	private String errorMessage;
-	private String messages;
+	private Login login;
+	private String keyPress;
+	
+	private String ui="";
+	private String idThemes="nova-colored";
 	
 	@PostConstruct
 	public void init() {
-		//load config
-		Conf.getInstance();
+		Conf.getInstance();//load configuration
 	}
 	
-	public String getCurrentDate(){//MMMM d, yyyy
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		Date date_ = new Date();
-		String _date = dateFormat.format(date_);
-		return _date;
-	}
-	
-	public String getMessages() {
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd");
-		Date date_ = new Date();
-		String _date = dateFormat.format(date_);
+	public String validateUserNamePassword(){
 		
-		switch(_date){
-		case "10-18" : {messages="HAPPY BIRTHDAY BOSS!!! We wish you good health and more blessing to come. Stay humble and kind to us..."; break;}
+		boolean isExpired = License.checkLicenseExpiration(Module.TIME);
+		String result="login";
+		
+		if(isExpired) {
+			result = "expired";
+		}else {
+			Login in = null;
+			
+			try{in = Login.validUser(Whitelist.remove(getName()), getPassword());}catch(Exception e) {} 
+			 
+			
+			
+			if(in != null){
+				
+				 	HttpSession session = SessionBean.getSession();
+			        session.setAttribute("username", name);
+					session.setAttribute("userid", in.getId());
+					session.setAttribute("ui", getUi());
+					session.setAttribute("theme",getIdThemes());
+					result = "timesheetdtls";
+			}else {
+				Application.addMessage(2, "Error", "Wrong Password");
+			}
+			
 		}
-		
-		
-		
-		return messages;
+		return result;
 	}
-	public void setMessages(String messages) {
-		this.messages = messages;
-	}
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -73,47 +77,37 @@ public class LoginBean implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public String back(){
-		HttpSession session = SessionBean.getSession();
-		session.setAttribute("username", "employeelogin");
-		return "timesheetlogin";
+	public Login getLogin() {
+		return login;
+	}
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+	public String getKeyPress() {
+		keyPress = "logId";
+		return keyPress;
+	}
+	public void setKeyPress(String keyPress) {
+		this.keyPress = keyPress;
+	}
+
+	public String getUi() {
+		return ui;
+	}
+
+	public void setUi(String ui) {
+		this.ui = ui;
+	}
+
+	public String getIdThemes() {
+		return idThemes;
+	}
+
+	public void setIdThemes(String idThemes) {
+		this.idThemes = idThemes;
 	}
 	
-	//validate login
-	public String validateUserNamePassword(){
-		boolean valid = Login.validate(name, password);
-		System.out.println("Valid: " + valid);
-		String result="login";
-		if(valid){
-			HttpSession session = SessionBean.getSession();
-			session.setAttribute("username", name);
-			result = "timesheet";
-		}else{
-			FacesContext.getCurrentInstance().addMessage(
-					null,new FacesMessage(
-							FacesMessage.SEVERITY_WARN, 
-							"Incorrect username and password", 
-							"Please enter correct username and password"
-							)
-					);
-//			/setErrorMessage("Incorrect username and password.");
-			setName("");
-			setPassword("");
-			result= "login";
-		}
-		System.out.println(getErrorMessage());
-		return result;
-	}
-	//logout event, invalidate session
-	public String logout(){
-		HttpSession session = SessionBean.getSession();
-		FacesContext.getCurrentInstance().getViewRoot().getViewMap().remove("loginBean");
-		setName("");
-		setPassword("");
-		session.invalidate();
-		return "login";
-	}
+	
 	
 }
 

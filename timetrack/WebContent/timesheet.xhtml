@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"   
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<link rel="manifest" type="image/x-icon" href="#{resource['bris-manifest.json']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="v6-library/animate/animate.css"/>
+            <h:outputStylesheet name="v6-library/css-hamburgers/hamburgers.min.css"/>
+            <h:outputStylesheet name="v6-library/select2/select2.min.css"/>
+            <h:outputStylesheet name="v6-library/css/util.css"/>
+            <h:outputStylesheet name="v6-library/css/main.css"/>
+            <h:outputStylesheet name="css/resume.css" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+            
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="v6-library/js/popper.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputScript name="v6-library/select2/select2.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.bundle.min.js" target="head"/>
+            <h:outputScript name="jquery-easing/jquery.easing.min.js" target="head"/>
+            <h:outputScript name="js/resume.min.js" target="head"/>
+            <h:outputScript name="v6-library/js/main.js" target="head"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+
+<style type="text/css">
+    body {
+		font-family: 'Varela Round', sans-serif;
+	}
+	.modal-login {		
+		color: #636363;
+		width: 1200px;
+	}
+	.modal-login .modal-content {
+		padding: 20px;
+		border-radius: 5px;
+		border: none;
+	}
+	.modal-login .modal-header {
+		border-bottom: none;   
+        position: relative;
+        justify-content: center;
+	}
+	.modal-login h4 {
+		text-align: center;
+		font-size: 26px;
+		margin: 30px 0 -15px;
+	}
+	.modal-login .form-control:focus {
+		border-color: black;
+	}
+	.modal-login .form-control, .modal-login .btn {
+		min-height: 40px;
+		border-radius: 3px; 
+	}
+	.modal-login .close {
+        position: absolute;
+		top: -5px;
+		right: -5px;
+	}	
+	.modal-login .modal-footer {
+		background: #ecf0f1;
+		border-color: #dee4e7;
+		text-align: center;
+        justify-content: center;
+		margin: 0 -20px -20px;
+		border-radius: 5px;
+		font-size: 13px;
+	}
+	.modal-login .modal-footer a {
+		color: #999;
+	}		
+	.modal-login .avatar {
+		position: absolute;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: -120px;
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		z-index: 9;
+		padding: 15px;
+	}
+	
+	.modal-login.modal-dialog {
+		margin-top: -20px;
+	}
+    .modal-login .btn {
+        color: #fff;
+        border-radius: 4px;
+		background: #60c7c1;
+		text-decoration: none;
+		transition: all 0.4s;
+        line-height: normal;
+        border: none;
+    }
+	.modal-login .btn:hover, .modal-login .btn:focus {
+		background: #45aba6;
+		outline: none;
+	}
+	.trigger-btn {
+		display: inline-block;
+		margin: 100px auto;
+	}
+</style>
+
+</h:head>
+
+<h:body id="page-top" onload="startTime();">
+	<p:defaultCommand target="#{timeSheetBean.keyPress}"/>
+	<p:growl id="msg" showDetail="true" />
+	
+	
+	<ui:include src="sideMenu.xhtml" />
+	
+	<div class="limiter">
+	
+		<div class="container-login100">
+			
+			<h:form prependId="false" id="formId" class="login100-form validate-form">
+				<p:focus for="idName"/>
+				<section  id="timeid">
+						
+						<div id="myModal">
+						<div class="modal-dialog modal-login">
+						<br/><br/><br/>
+							<div class="modal-content">
+								
+								<div class="modal-header">
+									
+										<p:graphicImage name="logo/logo.png" alt="Avatar" styleClass="avatar"/>
+									<h4 class="modal-title"><div id="timeId"/></h4>
+								</div>
+								<div class="modal-body">
+										
+										<p:panelGrid id="fieldId" styleClass="ui-noborder"  columns="3">
+											
+											<p:outputLabel value="Scan ID:" />
+											<p:inputText id="idName" placeholder="Scan your barcode" value="#{timeSheetBean.searchName}" style="width: 15em;border-width: 0 0 15me;outline: 0;border-color: blue" onclick="this.select()">
+												<p:ajax event="keyup" listener="#{timeSheetBean.loadEmployee}" delay="800" update="timeDataId"/>
+											</p:inputText>
+											<p:commandButton id="searchId" icon="fa fa-search" actionListener="#{timeSheetBean.loadEmployee}" update="timeDataId"/>
+											
+											
+											
+										</p:panelGrid>
+										<div id="tableDtlsId" style="display: none">
+										<p:dataTable id="timeDataId" value="#{timeSheetBean.sheets}" var="st" widgetVar="tableIn">
+													<f:facet name="header">
+														<p:outputLabel value="#{timeSheetBean.displayName}" style="font-size: large;"/>
+													</f:facet>
+													
+													<p:column headerText="Mode" width="70">
+				            							<p:outputLabel  value="#{st.timeModeName}"/>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Time In" width="50">
+				            							<p:outputLabel  value="#{st.timeIn}" rendered="#{!st.displayButtonIn}"/>
+				            							<p:commandButton id="timeInId" value="#{st.timeIn}" actionListener="#{timeSheetBean.timeSet(st,'IN')}" rendered="#{st.displayButtonIn}" update="timeDataId"/>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Time Out" width="50">
+				            							<p:outputLabel  value="#{st.timeOut}" rendered="#{!st.displayButtonOut}"/>
+				            							<p:commandButton id="timeOutId" value="#{st.timeOut}" actionListener="#{timeSheetBean.timeSet(st,'OUT')}" rendered="#{st.displayButtonOut}" update="timeDataId"/>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Total" width="50">
+				            							<p:outputLabel  value="#{st.totalTime}"/>
+				            						</p:column>
+													
+											</p:dataTable>
+										</div>
+								</div>
+								
+							</div>
+							
+						</div>
+					</div>  
+					
+					
+					
+						
+				</section>
+				
+			</h:form>
+			
+		</div>
+	
+	</div>	
+		
+	<footer id="footer">
+		
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="copyright">
+            &copy; Copyright <strong>#{versionBean.copyright.appname}</strong>. All Rights Reserved
+          </div>
+          <div class="credits">
+            Managed by <a href="http://www.facebook.com/marxmind">MARXMIND</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+            <a href="#page-top" class="scrollto">Home</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer>
+	
+	
+	
+	<h:outputScript name="v6-library/tilt/tilt.jquery.min.js"/>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+		
+		$(':input').keydown(function (event){
+			if(event.which == 13){ //enter
+				document.getElementById('idName').select();
+			}
+		});
+		
+			//<![CDATA[ 
+			
+				
+			
+			
+			function startTime() {
+				  var today = new Date();
+				  var hours = today.getHours();
+				  var minutes = today.getMinutes();
+				  var s = today.getSeconds();
+				  var ampm = hours >= 12 ? 'pm' : 'am';
+				  hours = hours % 12;
+				  hours = hours ? hours : 12; // the hour '0' should be '12'
+				  minutes = minutes < 10 ? '0'+minutes : minutes;
+				  var strTime = hours + ':' + minutes + '.'+ s +' ' + ampm;
+				  document.getElementById('timeId').innerHTML = "TIME: " + strTime;
+				  
+				  var ts = setTimeout(startTime, 500);
+				  //return strTime;
+			}
+			
+			
+			//]]>
+	</script>
+
+</h:body>	
+</html>

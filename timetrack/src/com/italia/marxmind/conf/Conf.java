@@ -29,7 +29,23 @@ public class Conf {
 	private String databaseUserName;
 	private String databasePassword;
 	
+	private String logFolder;
+	private String imageFolder;
+	private String reportFolder;
+	private boolean logActive;
 	
+	private String licenseCode;
+	private String dateFile;
+	private String licenseFile;
+	
+	public boolean isLogActive() {
+		return logActive;
+	}
+
+	public void setLogActive(boolean logActive) {
+		this.logActive = logActive;
+	}
+
 	private Conf() {}
 	
 	public static Conf getInstance() {
@@ -61,6 +77,8 @@ public class Conf {
 				configFolder.mkdir();
 				System.out.println("Creating config folder");
 				createConfFile(cFolder + SEPERATOR);
+				createLicenseFile(cFolder + SEPERATOR);
+				createDataLicenseFile(cFolder + SEPERATOR);
 			}
 			
 			File backupFolder = new File(PRIMARY_DRIVE + SEPERATOR + ConfigProp.APP_FOLDER.getName() + SEPERATOR + ConfigProp.APP_BACKUP_FOLDER.getName());
@@ -110,6 +128,46 @@ public class Conf {
 		}catch(IOException ioe) {}
 	}
 	
+	private void createLicenseFile(String folder) {
+		try {
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			String confile = externalContext.getRealPath("") + SEPERATOR + "resources" + SEPERATOR + "conf" + SEPERATOR + ConfigProp.APP_LICENSE.getName();
+			
+			BufferedReader br = new BufferedReader(new FileReader(new File(confile)));
+			
+			PrintWriter pw = new PrintWriter(new FileWriter(folder + ConfigProp.APP_LICENSE.getName()));
+			String line = null;
+			while((line = br.readLine()) !=null ) {
+				pw.println(line);
+			}
+			
+			pw.flush();
+			pw.close();
+			br.close();
+		}catch(IOException ioe) {}
+	}
+	
+	private void createDataLicenseFile(String folder) {
+		try {
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			String confile = externalContext.getRealPath("") + SEPERATOR + "resources" + SEPERATOR + "conf" + SEPERATOR + ConfigProp.APP_LICENSE_CODE.getName();
+			
+			BufferedReader br = new BufferedReader(new FileReader(new File(confile)));
+			
+			PrintWriter pw = new PrintWriter(new FileWriter(folder + ConfigProp.APP_LICENSE_CODE.getName()));
+			String line = null;
+			while((line = br.readLine()) !=null ) {
+				pw.println(line);
+			}
+			
+			pw.flush();
+			pw.close();
+			br.close();
+		}catch(IOException ioe) {}
+	}
+	
 	private void readConf() {
 		try {
 			Properties prop = new Properties();
@@ -131,6 +189,15 @@ public class Conf {
 			conf.setDatabaseSSL(prop.getProperty("APP_DATABASE_SSL"));
 			conf.setDatabaseUserName(u_name);
 			conf.setDatabasePassword(pword);
+			
+			conf.setLogActive(prop.getProperty("APP_LOG_OPEN").equalsIgnoreCase("yes")? true : false);
+			conf.setLogFolder(PRIMARY_DRIVE + SEPERATOR + ConfigProp.APP_FOLDER.getName() + SEPERATOR + ConfigProp.APP_LOG_FOLDER.getName() + SEPERATOR);
+			conf.setImageFolder(PRIMARY_DRIVE + SEPERATOR + ConfigProp.APP_FOLDER.getName() + SEPERATOR + ConfigProp.APP_IMG_FOLDER.getName() + SEPERATOR);
+			conf.setReportFolder(PRIMARY_DRIVE + SEPERATOR + ConfigProp.APP_FOLDER.getName() + SEPERATOR + ConfigProp.APP_REPORT_FOLDER.getName() + SEPERATOR);
+			
+			conf.setLicenseCode(prop.getProperty("APP_LICENSE"));
+			conf.setDateFile(PRIMARY_DRIVE + SEPERATOR + ConfigProp.APP_FOLDER.getName() + SEPERATOR + ConfigProp.APP_CONF_FOLDER.getName() + SEPERATOR + ConfigProp.APP_LICENSE_CODE.getName());
+			conf.setLicenseFile(PRIMARY_DRIVE + SEPERATOR + ConfigProp.APP_FOLDER.getName() + SEPERATOR + ConfigProp.APP_CONF_FOLDER.getName() + SEPERATOR + ConfigProp.APP_LICENSE.getName());
 			
 		}catch(Exception e) {}
 	}
@@ -193,6 +260,54 @@ public class Conf {
 
 	public void setDatabasePassword(String databasePassword) {
 		this.databasePassword = databasePassword;
+	}
+
+	public String getLogFolder() {
+		return logFolder;
+	}
+
+	public void setLogFolder(String logFolder) {
+		this.logFolder = logFolder;
+	}
+
+	public String getImageFolder() {
+		return imageFolder;
+	}
+
+	public void setImageFolder(String imageFolder) {
+		this.imageFolder = imageFolder;
+	}
+
+	public String getReportFolder() {
+		return reportFolder;
+	}
+
+	public void setReportFolder(String reportFolder) {
+		this.reportFolder = reportFolder;
+	}
+
+	public String getLicenseCode() {
+		return licenseCode;
+	}
+
+	public void setLicenseCode(String licenseCode) {
+		this.licenseCode = licenseCode;
+	}
+
+	public String getDateFile() {
+		return dateFile;
+	}
+
+	public void setDateFile(String dateFile) {
+		this.dateFile = dateFile;
+	}
+
+	public String getLicenseFile() {
+		return licenseFile;
+	}
+
+	public void setLicenseFile(String licenseFile) {
+		this.licenseFile = licenseFile;
 	}
 	
 	

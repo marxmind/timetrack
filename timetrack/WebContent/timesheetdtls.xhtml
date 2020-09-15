@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui = "http://java.sun.com/jsf/facelets"
+  xmlns:h = "http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"   
+  >
+<h:head>
+<link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon.ico']}" />
+<link rel="manifest" type="image/x-icon" href="#{resource['bris-manifest.json']}" />
+<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>#{versionBean.copyright.appname}</title>
+	</f:facet>
+	
+	<f:facet name="middle">
+            <h:outputStylesheet name="sb-admin/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="v6-library/animate/animate.css"/>
+            <h:outputStylesheet name="v6-library/css-hamburgers/hamburgers.min.css"/>
+            <h:outputStylesheet name="v6-library/select2/select2.min.css"/>
+            <h:outputStylesheet name="v6-library/css/util.css"/>
+            <h:outputStylesheet name="v6-library/css/main.css"/>
+            <h:outputStylesheet name="css/resume.css" target="head"/>
+            <h:outputStylesheet name="css/growl.css"/>
+            
+            <h:outputScript name="jquery/jquery.min.js" target="head"/>
+            <h:outputScript name="v6-library/js/popper.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" target="head"/>
+            <h:outputScript name="v6-library/select2/select2.min.js" target="head"/>
+            <h:outputScript name="bootstrap/js/bootstrap.bundle.min.js" target="head"/>
+            <h:outputScript name="jquery-easing/jquery.easing.min.js" target="head"/>
+            <h:outputScript name="js/resume.min.js" target="head"/>
+            <h:outputScript name="v6-library/js/main.js" target="head"/>
+    </f:facet>
+        
+    <f:facet name="last">
+ 		<h:outputStylesheet name="css/font-awesome.min.css" />
+    </f:facet>
+    <title>#{versionBean.copyright.appname}</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>#{versionBean.copyright.appname}</title>
+
+
+<style type="text/css">
+    body {
+		font-family: 'Varela Round', sans-serif;
+	}
+	.modal-login {		
+		color: #636363;
+		width: 1200px;
+	}
+	.modal-login .modal-content {
+		padding: 20px;
+		border-radius: 5px;
+		border: none;
+	}
+	.modal-login .modal-header {
+		border-bottom: none;   
+        position: relative;
+        justify-content: center;
+	}
+	.modal-login h4 {
+		text-align: center;
+		font-size: 26px;
+		margin: 30px 0 -15px;
+	}
+	.modal-login .form-control:focus {
+		border-color: #00467F;
+	}
+	.modal-login .form-control, .modal-login .btn {
+		min-height: 40px;
+		border-radius: 3px; 
+	}
+	.modal-login .close {
+        position: absolute;
+		top: -5px;
+		right: -5px;
+	}	
+	.modal-login .modal-footer {
+		background: #ecf0f1;
+		border-color: #dee4e7;
+		text-align: center;
+        justify-content: center;
+		margin: 0 -20px -20px;
+		border-radius: 5px;
+		font-size: 13px;
+	}
+	.modal-login .modal-footer a {
+		color: #999;
+	}		
+	.modal-login .avatar {
+		position: absolute;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: -120px;
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		z-index: 9;
+		padding: 15px;
+	}
+	
+	.modal-login.modal-dialog {
+		margin-top: -20px;
+	}
+    .modal-login .btn {
+        color: #fff;
+        border-radius: 4px;
+		background: #60c7c1;
+		text-decoration: none;
+		transition: all 0.4s;
+        line-height: normal;
+        border: none;
+    }
+	.modal-login .btn:hover, .modal-login .btn:focus {
+		background: #45aba6;
+		outline: none;
+	}
+	.trigger-btn {
+		display: inline-block;
+		margin: 100px auto;
+	}
+</style>
+
+</h:head>
+
+<h:body id="page-top" onload="startTime();">
+	
+	<p:growl id="msg" showDetail="true" />
+	<p:focus context="idNameSearch"/>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+       	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ 	</p:confirmDialog>		
+	
+	<ui:include src="sideMenu.xhtml" />
+	
+	<footer id="header">
+		<div class="container">
+	      <div class="row">
+	        <div class="col-lg-6 text-lg-left text-center">
+	          <div class="copyright">
+	            <strong>#{versionBean.copyright.appname}</strong>
+	          </div>
+	        </div>
+	        <div class="col-lg-6">
+	          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+	            <a href="#page-top" class="scrollto">Logout</a>
+	          </nav>
+	        </div>
+	      </div>
+    </div>
+	</footer>
+	
+	<div class="limiter">
+	
+		
+			
+			<h:form prependId="false" id="formId">
+				
+				<section  id="timeid">
+										<div id="dlgAdd" style="display: none">
+										
+											<p:toolbar id="tbAdd">
+											   		<f:facet name="left">
+												        
+											   		</f:facet>
+											   		<f:facet name="right">		
+											   			<p:commandButton update="timeDataId msg" value="Save"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{timeSheetDtlsBean.saveTime}">
+											        				<p:confirm header="Confirmation" message="Are you sure you want to save?" icon="ui-icon-alert" />
+											       		</p:commandButton>
+											       		<p:commandButton value="Close" onclick="$('#dlgAdd').hide(1000);"/>
+											  		</f:facet>
+										   			</p:toolbar>
+											<p:panelGrid id="addId" columns="4" styleClass="ui-noborder">
+												
+												<p:outputLabel value="Date"/>
+												<p:calendar id="dateId" value="#{timeSheetDtlsBean.dateTans}" effect="slideDown" inputStyle="width: 15em"/>
+												
+												<p:outputLabel/>
+												<p:outputLabel/>
+												
+												<p:outputLabel value="Employee"/>
+												<p:autoComplete  value="#{timeSheetDtlsBean.inputtedName}" completeMethod="#{timeSheetDtlsBean.autoSearchName}" queryDelay="800" minQueryLength="3" maxResults="5" placeholder="Search..." inputStyle="width: 15em">
+														<p:ajax event="change" listener="#{timeSheetDtlsBean.loadEmployee}" delay="800"/>
+												</p:autoComplete>
+												
+												<p:outputLabel value="Select Mode"/>
+												<p:selectOneMenu id="modeId"  value="#{timeSheetDtlsBean.modeId}" style="width: 15em">
+												   		<f:selectItems value="#{timeSheetDtlsBean.modeTimes}"/>
+												</p:selectOneMenu>
+												
+												<p:outputLabel value="Time In"/>
+												<p:inputText value="#{timeSheetDtlsBean.timeIn}" placeholder="HH:mm AM" style="width: 15em"/>
+												
+												<p:outputLabel value="Time Out"/>
+												<p:inputText value="#{timeSheetDtlsBean.timeOut}" placeholder="HH:mm PM" style="width: 15em"/>
+												
+											</p:panelGrid>
+										
+										</div>
+										
+										
+										<p:toolbar id="tbTool">
+								    		<f:facet name="left">
+										        <p:inputText id="idNameSearch" value="#{timeSheetDtlsBean.searchName}" placeholder="Search Name here" style="width: 20em">
+																<p:ajax event="keyup" listener="#{timeSheetDtlsBean.init}" delay="800" update="timeDataId" />
+												</p:inputText>
+								    		</f:facet>
+								    		<f:facet name="right">
+								    			
+								    			<p:commandButton update="timeDataId msg" value="Approve"  icon="fa fa-floppy-o" title="Click this button to save your changes" actionListener="#{timeSheetDtlsBean.approvedTime}">
+								        				<p:confirm header="Confirmation" message="Are you sure you want to approve the selected time?" icon="ui-icon-alert" />
+								        		</p:commandButton>
+								    		</f:facet>
+								    	</p:toolbar>	
+								    		
+										<p:dataTable id="timeDataId" value="#{timeSheetDtlsBean.sheets}" var="st"
+													rows="10" paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+													rowsPerPageTemplate="10,20,30,40,50,100" scrollable="false" paginatorPosition="top"
+													selection="#{timeSheetDtlsBean.selectedSheets}" rowKey="#{st.id}" 
+													editable="true" editMode="cell"
+										>
+													
+													<f:facet name="{Exporters}">
+						            						<h:commandLink title="Export in excel format">
+						                						    <p:graphicImage name="img/xls.jpg" width="24" height="24"/>
+						                							<p:dataExporter type="xls" target="timeDataId" fileName="timeData" options="#{dataExporter.excelOpt}"/>
+						            						</h:commandLink>
+						            						<h:commandLink title="Export in pdf format">
+						                						    <p:graphicImage name="img/pdf.jpg" width="24" height="24"/>
+						                							<p:dataExporter type="pdf" target="timeDataId" fileName="timeData" preProcessor="#{dataExporter.preProcessPDF}" options="#{exporter.pdfOpt}"/>
+						            						</h:commandLink>
+						            				</f:facet>
+													
+													<p:column headerText="Check" width="30" exportable="false" selectionMode="multiple"/>
+													<p:ajax event="cellEdit"  listener="#{timeSheetDtlsBean.onCellEdit}" update="timeDataId" />
+																										
+													<p:column headerText="Name" width="70">
+				            							<p:outputLabel  value="#{st.employeeName}"/>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Date" width="70">
+				            							<p:outputLabel  value="#{st.tmpDate}"/>
+				            						</p:column>
+													
+													<p:column headerText="Mode" width="70">
+				            							<p:outputLabel  value="#{st.timeModeName}"/>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Time In" width="50">
+				            						<p:cellEditor>
+														<f:facet name="output">
+															<p:outputLabel  value="#{st.timeIn}"/>
+														</f:facet>
+														<f:facet name="input">
+															<h:inputText value="#{st.timeIn}"/>
+														</f:facet>
+													</p:cellEditor>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Time Out" width="50">
+				            						<p:cellEditor>
+														<f:facet name="output">
+															<p:outputLabel  value="#{st.timeOut}"/>
+														</f:facet>
+														<f:facet name="input">
+															<h:inputText value="#{st.timeOut}"/>
+														</f:facet>
+													</p:cellEditor>
+				            						</p:column>
+				            						
+				            						<p:column headerText="Total" width="50">
+				            							<p:outputLabel  value="#{st.totalTime}"/>
+				            						</p:column>
+													
+											</p:dataTable>
+							
+				</section>
+				
+				
+				<p:contextMenu for="timeDataId" widgetVar="cMenu">
+					<p:menuitem value="Add Time"  actionListener="#{timeSheetDtlsBean.clear}" onclick="PF('cMenu').hide();$('#dlgAdd').show(1000);" update="addId"/>
+       				<p:menuitem value="Reload"  actionListener="#{timeSheetDtlsBean.init}" onclick="PF('cMenu').hide()" update="timeDataId"/>
+       				<p:menuitem value="Approve" icon="fa fa-floppy-o" actionListener="#{timeSheetDtlsBean.approvedTime}" onclick="PF('cMenu').hide()" update="timeDataId msg">
+       					<p:confirm header="Confirmation" message="Are you sure you want approve check time?" icon="ui-icon-alert" />
+       				</p:menuitem>
+       				<p:menuitem value="Delete" icon="fa fa-trash" actionListener="#{timeSheetDtlsBean.deleteTime}" onclick="PF('cMenu').hide()" update="timeDataId msg">
+       					<p:confirm header="Confirmation" message="Are you sure you want delete check time?" icon="ui-icon-alert" />
+       				</p:menuitem>
+				</p:contextMenu>
+			</h:form>
+			
+		
+	
+	</div>	
+		
+	<footer id="footer">
+		
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="copyright">
+            &copy; Copyright <strong>#{versionBean.copyright.appname}</strong>. All Rights Reserved
+          </div>
+          <div class="credits">
+            Managed by <a href="http://www.facebook.com/marxmind">MARXMIND</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+            <a href="#page-top" class="scrollto">Home</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer>
+	       
+	
+	<h:outputScript name="v6-library/tilt/tilt.jquery.min.js"/>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+		
+		
+			//<![CDATA[ 
+			
+			//]]>
+	</script>
+
+</h:body>	
+</html>
